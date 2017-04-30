@@ -1,20 +1,28 @@
 ﻿<?php
 	session_start();
+	include_once("user.php");
+	include_once("tools.php");
 	include_once("sql_connection.php");
+	if(!isset($_SESSION['user']))
+	{
+		echo "请您先登录！";
+		die();
+	}
 	if(isset($_POST["type"]))
 	{
-		$type_name = $_POST["type"];
-		$user_id = 0;
-		$sql = new FSQL();
-		$sql->connections();
-		$sql_query = "insert into product_type values(null, '$type_name', $user_id)";
-		//echo $sql_query;
-		$result = $sql->query($sql_query);
-		if($result === TRUE)
-			echo "插入成功！";
+		$user = unserialize($_SESSION['user']);
+		$product_type = new ProductType();
+		$product_type->type_name = filter($_POST["type"]);
+		$state = addtype($product_type, $user);
+		if($state == ADD_TYPE_SUCCESS)
+		{
+			echo "添加类型成功！";
+		}
 		else
-			echo "插入失败！";
-		$sql->disconnect();
+		{
+			echo "添加类型失败！";
+		}
+			
 	}
 	else
 	{

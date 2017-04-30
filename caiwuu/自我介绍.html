@@ -1,0 +1,40 @@
+<script language="javascript">
+	var s = ["付", "景", "辉"];
+	var show = "对待工作十分认真，不轻易放弃。在工作工程中，如果遇到知识储备不够时，能快速的学习，并应用到工作中去.";
+	var t = 0;
+	var i = 0;
+	var flag = true;
+	function init(){
+		
+		update();
+		update2();
+	}
+	function update(){
+		document.getElementById("name").innerHTML = s[i];
+		i = (i + 1)%3;
+		setTimeout(update, 1000);
+	}
+	function update2(){
+		var ss = show.substr(0, t);
+		if(flag == true)
+			ss+="__";
+		else
+			;
+		flag = !flag;
+		document.getElementById("gong").innerHTML = ss;
+		if(t < show.length)
+		{
+			t ++;
+		}
+		
+			setTimeout(update2, 100);
+	}
+</script>
+<body onload="init()">
+
+<label style="color:#050">姓名</label>：<b style="color:#ff0000" id="name">付景辉</b><br />
+<label style="color:#050">院系</label>：计算机与信息工程学院<br />
+<label style="color:#050">性格</label>：积极向上，对未来充满向往和激情。善于反思，有不断改进的觉悟，但是不太容易与人沟通。<br />
+<label style="color:#050">工作优势</label>：<b id="gong" style="color:#490;"></b><br />
+
+</body>

@@ -4,34 +4,24 @@
 	include_once("tools.php");
 	include_once("sql_connection.php");
 	header("Content-type:text/html;charset=utf-8");
-	//echo addcslashes($_GET['user_name'], "1\'\"\\");
 	if(isset($_POST['user_name']) && isset($_POST['user_password']))
 	{
 		$sql = new FSQL();
 		$sql->connections();
-		//过滤输入的字符
 		$user_name = filter($_POST['user_name']);
 		$user_password = filter($_POST['user_password']);
 		
 		$user = new User();
 		$user->user_name = $user_name;
 		$user->user_password = $user_password;
-		$state = register($user);
-		if($state == REGISTER_SUCCESS)
+		$state = login($user);
+		if($state == LOGIN_SUCCESS)
 		{
-			echo "注册成功！";
+			echo "login success!";
 		}
-		else if($state == REGISTER_FAILD)
+		else
 		{
-			echo "注册失败！";
+			echo "login faild!";
 		}
-		else if($state == REGISTER_USER_EXISTS)
-		{
-			echo "用户已经存在！";
-		}
-	}
-	else
-	{
-		echo "未知操作！";
 	}
 ?>
